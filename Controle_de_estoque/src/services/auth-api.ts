@@ -56,11 +56,32 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return (await response.json()) as T
 }
 
+export function apiRequest<T>(
+  path: string,
+  accessToken: string,
+  init?: RequestInit,
+) {
+  return request<T>(path, {
+    ...init,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      ...init?.headers,
+    },
+  })
+}
+
 export const authApi = {
   login(credentials: LoginCredentials) {
     return request<AuthenticationSession>('/auth/login', {
       method: 'POST',
       body: JSON.stringify(credentials),
+    })
+  },
+
+  refresh(refreshToken: string) {
+    return request<AuthenticationSession>('/auth/refresh', {
+      method: 'POST',
+      body: JSON.stringify({ refreshToken }),
     })
   },
 
@@ -72,8 +93,6 @@ export const authApi = {
   },
 
   me(accessToken: string) {
-    return request<CurrentUser>('/auth/me', {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    })
+    return apiRequest<CurrentUser>('/auth/me', accessToken)
   },
 }
