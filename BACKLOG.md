@@ -45,3 +45,25 @@ Diretriz de modelagem:
 - Referência externa e código de barras de origem são opcionais e pertencem à variante.
 - Medidas devem ser armazenadas em unidade padronizada, preferencialmente milímetros, e não como textos `1m`, `60cm` ou `1,20m`.
 - O XML poderá alimentar um importador idempotente após a definição da unidade de medida, política de atualização e regras das etiquetas operacionais.
+
+## Ciclo de vida e leitura por scanner
+
+### Cores corporativas
+
+- As cores de novas variantes devem vir do catálogo administrado pela empresa, evitando variações de escrita e cadastros duplicados.
+- Catálogo inicial confirmado pela fonte XML: `Cinza`, `Laranja`, `Preto` e `Azul`.
+- Futuramente disponibilizar administração de cores, mantendo cores antigas vinculadas ao histórico mesmo após inativação.
+
+### Inativação e exclusão de produtos
+
+- Inativação bloqueia novas operações, mas mantém o produto visível nos filtros administrativos e identificável por código.
+- Exclusão é lógica e auditável: o produto fica oculto do catálogo comum, sem remoção física dos registros históricos.
+- Somente produtos previamente inativados podem ser excluídos.
+- A exclusão exige a permissão específica `products.delete`.
+
+### Contrato futuro do scanner
+
+- Toda leitura deve resolver primeiro o código interno, QR Code ou código externo para uma variante e seu produto.
+- Se o produto ou a variante estiver inativo, nenhuma movimentação poderá ser criada.
+- A API deverá responder com um código de erro estável e a interface exibirá exatamente: **“Produto Inativado do Sistema”**.
+- Produtos excluídos logicamente continuam disponíveis apenas para auditoria e resolução histórica, nunca para movimentações.
