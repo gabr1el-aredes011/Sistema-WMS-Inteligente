@@ -1,0 +1,11 @@
+.suppliers-table { min-width: 900px; }
+.suppliers-table th:first-child { width: 30%; }
+.suppliers-table th:nth-child(2) { width: 18%; }
+.suppliers-table th:nth-child(3) { width: 28%; }
+.supplier-identity { display: flex; align-items: center; gap: 0.7rem; }
+.supplier-identity > span:first-child { display: grid; width: 34px; height: 34px; flex: 0 0 auto; place-items: center; border-radius: 8px; color: var(--blue-600); background: #edf9ff; }
+.supplier-identity > span:last-child, .supplier-contact { display: flex; min-width: 0; flex-direction: column; }
+.supplier-identity strong, .supplier-contact strong { overflow: hidden; color: #263649; font-size: 0.74rem; text-overflow: ellipsis; white-space: nowrap; }
+.supplier-identity small, .supplier-contact small { margin-top: 0.2rem; overflow: hidden; color: #8997a7; font-size: 0.64rem; text-overflow: ellipsis; white-space: nowrap; }
+.supplier-tax-id { color: #607187; font-size: 0.7rem; font-variant-numeric: tabular-nums; }
+.supplier-modal { width: min(100%, 680px); }

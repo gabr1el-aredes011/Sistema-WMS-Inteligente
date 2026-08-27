@@ -112,7 +112,7 @@
 }
 
 .product-modal {
-  width: min(100%, 790px);
+  width: min(100%, 980px);
 }
 
 .product-variants-heading {
@@ -152,7 +152,7 @@
 
 .variant-row {
   display: grid;
-  grid-template-columns: 1fr 0.8fr 1fr 1fr auto;
+  grid-template-columns: 1fr 0.8fr 1fr 1fr 0.7fr auto;
   align-items: end;
   gap: 0.65rem;
   border: 1px solid #e4ebf1;

@@ -6,6 +6,7 @@ import DashboardPage from './pages/DashboardPage'
 import LoginPage from './pages/LoginPage'
 import ProductCatalogPage from './pages/ProductCatalogPage'
 import UsersPage from './pages/UsersPage'
+import SuppliersPage from './pages/SuppliersPage'
 
 function App() {
   return (
@@ -24,6 +25,14 @@ function App() {
           element={
             <RequirePermission permission="products.read">
               <ProductCatalogPage />
+            </RequirePermission>
+          }
+        />
+        <Route
+          path="/suppliers"
+          element={
+            <RequirePermission permission="suppliers.read">
+              <SuppliersPage />
             </RequirePermission>
           }
         />

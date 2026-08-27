@@ -11,6 +11,12 @@ export interface ProductColor {
   hexCode: string
 }
 
+export interface UnitOfMeasure {
+  id: string
+  code: string
+  name: string
+}
+
 export interface ProductVariant {
   id: string
   internalCode: string

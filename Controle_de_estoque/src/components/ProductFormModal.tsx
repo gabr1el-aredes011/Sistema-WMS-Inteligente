@@ -7,12 +7,14 @@ import type {
   ProductDetails,
   ProductInput,
   ProductVariantInput,
+  UnitOfMeasure,
 } from '../types/catalog'
 
 interface ProductFormModalProps {
   product: ProductDetails | null
   categories: ProductCategory[]
   colors: ProductColor[]
+  unitsOfMeasure: UnitOfMeasure[]
   isSaving: boolean
   serverError: string
   onClose: () => void
@@ -39,6 +41,7 @@ export default function ProductFormModal({
   product,
   categories,
   colors,
+  unitsOfMeasure,
   isSaving,
   serverError,
   onClose,
@@ -199,6 +202,7 @@ export default function ProductFormModal({
                   </label>
                   <label className="modal-field"><span>Referência externa (opcional)</span><input value={variant.externalReference ?? ''} onChange={(event) => updateVariant(index, 'externalReference', event.target.value)} disabled={!isCreating || isSaving} /></label>
                   <label className="modal-field"><span>Código externo (opcional)</span><input value={variant.externalBarcode ?? ''} onChange={(event) => updateVariant(index, 'externalBarcode', event.target.value)} disabled={!isCreating || isSaving} /></label>
+                  <label className="modal-field"><span>Unidade</span><select value={variant.unitOfMeasure} onChange={(event) => updateVariant(index, 'unitOfMeasure', event.target.value)} disabled={!isCreating || isSaving}>{variant.unitOfMeasure && !unitsOfMeasure.some((unit) => unit.code === variant.unitOfMeasure) && <option value={variant.unitOfMeasure}>{variant.unitOfMeasure} (legado)</option>}{unitsOfMeasure.map((unit) => <option key={unit.id} value={unit.code}>{unit.code} · {unit.name}</option>)}</select></label>
                   {isCreating && variants.length > 1 && (
                     <button type="button" onClick={() => setVariants((current) => current.filter((_, itemIndex) => itemIndex !== index))} aria-label={`Remover variante ${index + 1}`}><FiTrash2 /></button>
                   )}
