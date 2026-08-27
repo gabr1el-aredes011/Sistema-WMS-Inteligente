@@ -24,6 +24,7 @@ import type {
   ProductDetails,
   ProductInput,
   ProductSummary,
+  UnitOfMeasure,
 } from '../types/catalog'
 import '../styles/users.css'
 import '../styles/catalog.css'
@@ -56,6 +57,7 @@ export default function ProductCatalogPage() {
   const [products, setProducts] = useState<PagedProducts>(emptyPage)
   const [categories, setCategories] = useState<ProductCategory[]>([])
   const [colors, setColors] = useState<ProductColor[]>([])
+  const [unitsOfMeasure, setUnitsOfMeasure] = useState<UnitOfMeasure[]>([])
   const [searchInput, setSearchInput] = useState('')
   const [search, setSearch] = useState('')
   const [categoryId, setCategoryId] = useState('')
@@ -83,6 +85,14 @@ export default function ProductCatalogPage() {
     catalogApi.categories(token)
       .then((result) => { if (!cancelled) setCategories(result) })
       .catch((error: unknown) => { if (!cancelled) setLoadError(error instanceof ApiError ? error.message : 'Não foi possível carregar as categorias.') })
+    return () => { cancelled = true }
+  }, [token, refreshVersion])
+
+  useEffect(() => {
+    let cancelled = false
+    catalogApi.unitsOfMeasure(token)
+      .then((result) => { if (!cancelled) setUnitsOfMeasure(result) })
+      .catch((error: unknown) => { if (!cancelled) setLoadError(error instanceof ApiError ? error.message : 'Não foi possível carregar as unidades de medida.') })
     return () => { cancelled = true }
   }, [token, refreshVersion])
 
@@ -262,7 +272,7 @@ export default function ProductCatalogPage() {
         <footer className="users-pagination"><span>Página {products.page} de {Math.max(products.totalPages, 1)} · {products.totalCount} registro(s)</span><div><button type="button" onClick={() => { setIsLoading(true); setPage(page - 1) }} disabled={page <= 1 || isLoading}><FiChevronLeft /></button><button type="button" onClick={() => { setIsLoading(true); setPage(page + 1) }} disabled={page >= products.totalPages || isLoading}><FiChevronRight /></button></div></footer>
       </section>
 
-      {editingProduct !== undefined && <ProductFormModal key={editingProduct?.id ?? 'new-product'} product={editingProduct} categories={categories} colors={colors} isSaving={isSaving} serverError={formError} onClose={() => setEditingProduct(undefined)} onSave={saveProduct} />}
+      {editingProduct !== undefined && <ProductFormModal key={editingProduct?.id ?? 'new-product'} product={editingProduct} categories={categories} colors={colors} unitsOfMeasure={unitsOfMeasure} isSaving={isSaving} serverError={formError} onClose={() => setEditingProduct(undefined)} onSave={saveProduct} />}
 
       {categoryDialog && <div className="modal-backdrop" role="presentation"><section className="confirm-dialog category-dialog" role="dialog" aria-modal="true"><span className="confirm-dialog__icon"><FiLayers /></span><h2>Nova categoria</h2><p>Crie uma organização para agrupar os produtos do catálogo.</p><form onSubmit={createCategory}><input value={categoryName} onChange={(event) => setCategoryName(event.target.value)} placeholder="Ex.: Montantes" autoFocus />{formError && <div className="modal-error">{formError}</div>}<div><button className="button button--secondary" type="button" onClick={() => setCategoryDialog(false)}>Cancelar</button><button className="button button--primary" type="submit" disabled={isSaving}>Criar categoria</button></div></form></section></div>}
 

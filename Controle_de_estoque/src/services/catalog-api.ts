@@ -3,6 +3,7 @@ import type {
   PagedProducts,
   ProductCategory,
   ProductColor,
+  UnitOfMeasure,
   ProductDetails,
   ProductInput,
   UpdateProductInput,
@@ -30,6 +31,10 @@ export const catalogApi = {
 
   colors(accessToken: string) {
     return apiRequest<ProductColor[]>('/product-colors', accessToken)
+  },
+
+  unitsOfMeasure(accessToken: string) {
+    return apiRequest<UnitOfMeasure[]>('/units-of-measure', accessToken)
   },
 
   list(accessToken: string, params: ListProductsParams) {

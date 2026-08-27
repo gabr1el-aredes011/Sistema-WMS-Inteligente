@@ -346,7 +346,9 @@ O usuário volta para o login quando a renovação não é mais permitida, por e
 
 Ao clicar em **Encerrar sessão**, o refresh token atual é revogado. Um refresh token antigo não pode ser reutilizado; a API possui detecção de rotação e reutilização.
 
-Atualmente os tokens ficam somente na memória do frontend. Isso reduz a persistência de credenciais no navegador, mas significa que atualizar a página com `F5` encerra a sessão local e exige um novo login. Uma estratégia baseada em cookie `HttpOnly` poderá ser adotada futuramente.
+Atualmente a sessão é mantida no `sessionStorage` da aba do navegador. Por isso, atualizar a página com `F5` preserva a autenticação e o usuário permanece na mesma tela. Ao fechar a aba, o navegador remove essa cópia local; no próximo acesso será necessário entrar novamente. Durante a abertura da aplicação, se o access token já tiver expirado mas o refresh token ainda for válido, o frontend tenta renovar a sessão automaticamente.
+
+O `sessionStorage` é uma solução adequada para o estágio atual de desenvolvimento, mas os tokens continuam acessíveis ao JavaScript da própria aplicação. Antes da publicação em produção, a equipe deverá avaliar a migração do refresh token para um cookie `HttpOnly`, `Secure` e com política `SameSite`, acompanhada das proteções apropriadas contra CSRF.
 
 ## 11. Perfis de acesso existentes
 

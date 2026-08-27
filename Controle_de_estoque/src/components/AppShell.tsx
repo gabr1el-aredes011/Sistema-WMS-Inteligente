@@ -9,6 +9,7 @@ import {
   FiPackage,
   FiSearch,
   FiSettings,
+  FiBriefcase,
   FiTruck,
   FiUsers,
   FiX,
@@ -29,6 +30,12 @@ const navigation = [
   },
   { label: 'Recebimentos', icon: FiBox },
   { label: 'Expedições', icon: FiTruck },
+  {
+    label: 'Fornecedores',
+    icon: FiBriefcase,
+    path: '/suppliers',
+    permission: 'suppliers.read',
+  },
   {
     label: 'Usuários',
     icon: FiUsers,
