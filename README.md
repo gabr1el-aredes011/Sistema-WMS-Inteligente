@@ -1,3 +1,7 @@
+# WMS Inteligente
+
+> Para preparar e executar o projeto, consulte o [Guia completo de ambiente local](GUIA_DE_AMBIENTE_LOCAL.md).
+
 README OFICIAL DO REPOSITÓRIO
 
 O conteúdo abaixo será utilizado como base para o README.md.
