@@ -58,6 +58,8 @@ function LoginPage() {
       if (caughtError instanceof ApiError) {
         if (caughtError.status === 401) {
           setError('E-mail ou senha inválidos. Revise os dados e tente novamente.')
+        } else if (caughtError.status === 403) {
+          setError('Seu perfil está inativo. Entre em contato com o seu administrador.')
         } else if (caughtError.status === 429) {
           setError('Muitas tentativas. Aguarde alguns minutos antes de tentar novamente.')
         } else {
