@@ -173,6 +173,33 @@
   background: #fff7f8;
 }
 
+.color-select-control {
+  position: relative;
+  display: block;
+}
+
+.color-select-control > i {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 0.75rem;
+  width: 11px;
+  height: 11px;
+  transform: translateY(-50%);
+  border: 1px solid rgba(10, 24, 40, 0.14);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.color-select-control > select {
+  padding-left: 2rem;
+}
+
+.table-action--danger {
+  color: #b94b5c !important;
+  background: #fff7f8 !important;
+}
+
 .variant-note {
   margin: 0.7rem 0 0;
   color: #8b98a8;

@@ -3,6 +3,7 @@ import { FiBox, FiPlus, FiTrash2, FiX } from 'react-icons/fi'
 import type {
   CatalogItemType,
   ProductCategory,
+  ProductColor,
   ProductDetails,
   ProductInput,
   ProductVariantInput,
@@ -11,6 +12,7 @@ import type {
 interface ProductFormModalProps {
   product: ProductDetails | null
   categories: ProductCategory[]
+  colors: ProductColor[]
   isSaving: boolean
   serverError: string
   onClose: () => void
@@ -36,6 +38,7 @@ const itemTypes: { value: CatalogItemType; label: string }[] = [
 export default function ProductFormModal({
   product,
   categories,
+  colors,
   isSaving,
   serverError,
   onClose,
@@ -173,7 +176,27 @@ export default function ProductFormModal({
               {variants.map((variant, index) => (
                 <div className="variant-row" key={`${index}-${variant.color}`}>
                   <label className="modal-field"><span>Código interno</span><input value={product?.variants[index]?.internalCode ?? 'Gerado automaticamente'} disabled /></label>
-                  <label className="modal-field"><span>Cor</span><input value={variant.color} onChange={(event) => updateVariant(index, 'color', event.target.value)} disabled={!isCreating || isSaving} /></label>
+                  <label className="modal-field">
+                    <span>Cor</span>
+                    <span className="color-select-control">
+                      <i style={{ backgroundColor: colors.find((color) => color.name === variant.color)?.hexCode ?? '#dce4ec' }} />
+                      <select value={variant.color} onChange={(event) => updateVariant(index, 'color', event.target.value)} disabled={!isCreating || isSaving}>
+                        <option value="">Selecione</option>
+                        {variant.color && !colors.some((color) => color.name === variant.color) && (
+                          <option value={variant.color}>{variant.color} (legado)</option>
+                        )}
+                        {colors.map((color) => (
+                          <option
+                            key={color.id}
+                            value={color.name}
+                            disabled={variants.some((item, itemIndex) => itemIndex !== index && item.color === color.name)}
+                          >
+                            {color.name}
+                          </option>
+                        ))}
+                      </select>
+                    </span>
+                  </label>
                   <label className="modal-field"><span>Referência externa (opcional)</span><input value={variant.externalReference ?? ''} onChange={(event) => updateVariant(index, 'externalReference', event.target.value)} disabled={!isCreating || isSaving} /></label>
                   <label className="modal-field"><span>Código externo (opcional)</span><input value={variant.externalBarcode ?? ''} onChange={(event) => updateVariant(index, 'externalBarcode', event.target.value)} disabled={!isCreating || isSaving} /></label>
                   {isCreating && variants.length > 1 && (

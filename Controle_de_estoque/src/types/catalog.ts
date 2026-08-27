@@ -5,6 +5,12 @@ export interface ProductCategory {
   productCount: number
 }
 
+export interface ProductColor {
+  id: string
+  name: string
+  hexCode: string
+}
+
 export interface ProductVariant {
   id: string
   internalCode: string

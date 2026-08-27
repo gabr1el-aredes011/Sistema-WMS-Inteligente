@@ -2,6 +2,7 @@ import { apiRequest } from './auth-api'
 import type {
   PagedProducts,
   ProductCategory,
+  ProductColor,
   ProductDetails,
   ProductInput,
   UpdateProductInput,
@@ -25,6 +26,10 @@ export const catalogApi = {
       method: 'POST',
       body: JSON.stringify({ name }),
     })
+  },
+
+  colors(accessToken: string) {
+    return apiRequest<ProductColor[]>('/product-colors', accessToken)
   },
 
   list(accessToken: string, params: ListProductsParams) {
@@ -60,6 +65,12 @@ export const catalogApi = {
     return apiRequest<ProductDetails>(`/products/${productId}/status`, accessToken, {
       method: 'PUT',
       body: JSON.stringify({ isActive }),
+    })
+  },
+
+  delete(accessToken: string, productId: string) {
+    return apiRequest<void>(`/products/${productId}`, accessToken, {
+      method: 'DELETE',
     })
   },
 }

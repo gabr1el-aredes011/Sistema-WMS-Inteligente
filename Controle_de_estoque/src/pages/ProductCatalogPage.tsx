@@ -11,6 +11,7 @@ import {
   FiSearch,
   FiSlash,
   FiTag,
+  FiTrash2,
 } from 'react-icons/fi'
 import { useAuth } from '../auth/useAuth'
 import ProductFormModal from '../components/ProductFormModal'
@@ -19,6 +20,7 @@ import { catalogApi } from '../services/catalog-api'
 import type {
   PagedProducts,
   ProductCategory,
+  ProductColor,
   ProductDetails,
   ProductInput,
   ProductSummary,
@@ -53,6 +55,7 @@ export default function ProductCatalogPage() {
   const permissions = session?.user.permissions ?? []
   const [products, setProducts] = useState<PagedProducts>(emptyPage)
   const [categories, setCategories] = useState<ProductCategory[]>([])
+  const [colors, setColors] = useState<ProductColor[]>([])
   const [searchInput, setSearchInput] = useState('')
   const [search, setSearch] = useState('')
   const [categoryId, setCategoryId] = useState('')
@@ -64,6 +67,7 @@ export default function ProductCatalogPage() {
   const [isSaving, setIsSaving] = useState(false)
   const [formError, setFormError] = useState('')
   const [statusProduct, setStatusProduct] = useState<ProductSummary | null>(null)
+  const [deleteProduct, setDeleteProduct] = useState<ProductSummary | null>(null)
   const [categoryDialog, setCategoryDialog] = useState(false)
   const [categoryName, setCategoryName] = useState('')
   const [refreshVersion, setRefreshVersion] = useState(0)
@@ -72,12 +76,21 @@ export default function ProductCatalogPage() {
   const canCreate = permissions.includes('products.create')
   const canUpdate = permissions.includes('products.update')
   const canDisable = permissions.includes('products.disable')
+  const canDelete = permissions.includes('products.delete')
 
   useEffect(() => {
     let cancelled = false
     catalogApi.categories(token)
       .then((result) => { if (!cancelled) setCategories(result) })
       .catch((error: unknown) => { if (!cancelled) setLoadError(error instanceof ApiError ? error.message : 'Não foi possível carregar as categorias.') })
+    return () => { cancelled = true }
+  }, [token, refreshVersion])
+
+  useEffect(() => {
+    let cancelled = false
+    catalogApi.colors(token)
+      .then((result) => { if (!cancelled) setColors(result) })
+      .catch((error: unknown) => { if (!cancelled) setLoadError(error instanceof ApiError ? error.message : 'Não foi possível carregar as cores da empresa.') })
     return () => { cancelled = true }
   }, [token, refreshVersion])
 
@@ -179,6 +192,18 @@ export default function ProductCatalogPage() {
     }
   }
 
+  async function deleteSelectedProduct() {
+    if (!deleteProduct) return
+    try {
+      await catalogApi.delete(token, deleteProduct.id)
+      setDeleteProduct(null)
+      reload('Produto excluído do catálogo com segurança.')
+    } catch (error) {
+      setLoadError(error instanceof ApiError ? error.message : 'Não foi possível excluir o produto.')
+      setDeleteProduct(null)
+    }
+  }
+
   const visibleVariants = products.items.reduce((total, product) => total + product.variantCount, 0)
 
   return (
@@ -228,7 +253,7 @@ export default function ProductCatalogPage() {
                   <td><span className="catalog-dimensions">{dimensions(product)}</span></td>
                   <td><div className="catalog-variants"><strong>{product.variantCount}</strong><span>{product.colors.slice(0, 3).join(', ') || 'Sem cor'}</span></div></td>
                   <td><span className={`user-status ${product.isActive ? 'user-status--active' : 'user-status--inactive'}`}><span />{product.isActive ? 'Ativo' : 'Inativo'}</span></td>
-                  <td><div className="table-actions">{canUpdate && <button type="button" onClick={() => openEdit(product.id)} title="Editar produto"><FiEdit2 /></button>}{canDisable && <button type="button" onClick={() => setStatusProduct(product)} title={product.isActive ? 'Inativar' : 'Reativar'}>{product.isActive ? <FiSlash /> : <FiCheckCircle />}</button>}</div></td>
+                  <td><div className="table-actions">{canUpdate && <button type="button" onClick={() => openEdit(product.id)} title="Editar produto"><FiEdit2 /></button>}{canDisable && <button type="button" onClick={() => setStatusProduct(product)} title={product.isActive ? 'Inativar' : 'Reativar'}>{product.isActive ? <FiSlash /> : <FiCheckCircle />}</button>}{canDelete && !product.isActive && <button className="table-action--danger" type="button" onClick={() => setDeleteProduct(product)} title="Excluir produto"><FiTrash2 /></button>}</div></td>
                 </tr>
               ))}
             </tbody>
@@ -237,11 +262,12 @@ export default function ProductCatalogPage() {
         <footer className="users-pagination"><span>Página {products.page} de {Math.max(products.totalPages, 1)} · {products.totalCount} registro(s)</span><div><button type="button" onClick={() => { setIsLoading(true); setPage(page - 1) }} disabled={page <= 1 || isLoading}><FiChevronLeft /></button><button type="button" onClick={() => { setIsLoading(true); setPage(page + 1) }} disabled={page >= products.totalPages || isLoading}><FiChevronRight /></button></div></footer>
       </section>
 
-      {editingProduct !== undefined && <ProductFormModal key={editingProduct?.id ?? 'new-product'} product={editingProduct} categories={categories} isSaving={isSaving} serverError={formError} onClose={() => setEditingProduct(undefined)} onSave={saveProduct} />}
+      {editingProduct !== undefined && <ProductFormModal key={editingProduct?.id ?? 'new-product'} product={editingProduct} categories={categories} colors={colors} isSaving={isSaving} serverError={formError} onClose={() => setEditingProduct(undefined)} onSave={saveProduct} />}
 
       {categoryDialog && <div className="modal-backdrop" role="presentation"><section className="confirm-dialog category-dialog" role="dialog" aria-modal="true"><span className="confirm-dialog__icon"><FiLayers /></span><h2>Nova categoria</h2><p>Crie uma organização para agrupar os produtos do catálogo.</p><form onSubmit={createCategory}><input value={categoryName} onChange={(event) => setCategoryName(event.target.value)} placeholder="Ex.: Montantes" autoFocus />{formError && <div className="modal-error">{formError}</div>}<div><button className="button button--secondary" type="button" onClick={() => setCategoryDialog(false)}>Cancelar</button><button className="button button--primary" type="submit" disabled={isSaving}>Criar categoria</button></div></form></section></div>}
 
       {statusProduct && <div className="modal-backdrop" role="presentation"><section className="confirm-dialog" role="dialog" aria-modal="true"><span className={`confirm-dialog__icon ${statusProduct.isActive ? 'confirm-dialog__icon--danger' : ''}`}>{statusProduct.isActive ? <FiSlash /> : <FiCheckCircle />}</span><h2>{statusProduct.isActive ? 'Inativar produto?' : 'Reativar produto?'}</h2><p>{statusProduct.isActive ? 'O produto deixará de ficar disponível para novas operações.' : 'O produto voltará a ficar disponível para a operação.'}</p><div><button className="button button--secondary" type="button" onClick={() => setStatusProduct(null)}>Cancelar</button><button className={`button ${statusProduct.isActive ? 'button--danger' : 'button--primary'}`} type="button" onClick={changeProductStatus}>{statusProduct.isActive ? 'Inativar' : 'Reativar'}</button></div></section></div>}
+      {deleteProduct && <div className="modal-backdrop" role="presentation"><section className="confirm-dialog" role="dialog" aria-modal="true"><span className="confirm-dialog__icon confirm-dialog__icon--danger"><FiTrash2 /></span><h2>Excluir produto do catálogo?</h2><p>O produto ficará oculto, mas seus registros serão preservados para auditoria. Esta ação só é permitida para produtos inativos.</p><div><button className="button button--secondary" type="button" onClick={() => setDeleteProduct(null)}>Cancelar</button><button className="button button--danger" type="button" onClick={deleteSelectedProduct}>Excluir com segurança</button></div></section></div>}
       {notice && <div className="success-toast" role="status"><FiCheckCircle /> {notice}</div>}
     </main>
   )
