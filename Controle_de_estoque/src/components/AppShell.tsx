@@ -21,7 +21,12 @@ import '../styles/dashboard.css'
 
 const navigation = [
   { label: 'Visão geral', icon: FiHome, path: '/dashboard' },
-  { label: 'Estoque', icon: FiPackage },
+  {
+    label: 'Estoque',
+    icon: FiPackage,
+    path: '/products',
+    permission: 'products.read',
+  },
   { label: 'Recebimentos', icon: FiBox },
   { label: 'Expedições', icon: FiTruck },
   {

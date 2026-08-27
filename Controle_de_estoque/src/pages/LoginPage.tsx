@@ -21,7 +21,7 @@ interface LocationState {
 }
 
 function LoginPage() {
-  const { isAuthenticated, login } = useAuth()
+  const { isAuthenticated, isInitializing, login, sessionNotice } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
   const [email, setEmail] = useState('')
@@ -29,6 +29,11 @@ function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
+  const displayedError = error || sessionNotice
+
+  if (isInitializing) {
+    return <div className="app-loading" role="status">Restaurando sua sessão...</div>
+  }
 
   if (isAuthenticated) {
     return <Navigate to="/dashboard" replace />
@@ -130,7 +135,7 @@ function LoginPage() {
                   autoComplete="email"
                   autoFocus
                   disabled={isSubmitting}
-                  aria-describedby={error ? 'login-error' : undefined}
+                  aria-describedby={displayedError ? 'login-error' : undefined}
                 />
               </span>
             </label>
@@ -146,7 +151,7 @@ function LoginPage() {
                   placeholder="Digite sua senha"
                   autoComplete="current-password"
                   disabled={isSubmitting}
-                  aria-describedby={error ? 'login-error' : undefined}
+                  aria-describedby={displayedError ? 'login-error' : undefined}
                 />
                 <button
                   className="password-toggle"
@@ -160,10 +165,10 @@ function LoginPage() {
               </span>
             </label>
 
-            {error && (
+            {displayedError && (
               <div className="login-error" id="login-error" role="alert">
                 <span>!</span>
-                <p>{error}</p>
+                <p>{displayedError}</p>
               </div>
             )}
 
