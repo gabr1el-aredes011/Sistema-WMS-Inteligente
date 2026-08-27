@@ -8,6 +8,7 @@ import {
   FiFilter,
   FiLayers,
   FiPlus,
+  FiPrinter,
   FiSearch,
   FiSlash,
   FiTag,
@@ -15,6 +16,7 @@ import {
 } from 'react-icons/fi'
 import { useAuth } from '../auth/useAuth'
 import ProductFormModal from '../components/ProductFormModal'
+import ProductLabelModal from '../components/ProductLabelModal'
 import { ApiError } from '../services/auth-api'
 import { catalogApi } from '../services/catalog-api'
 import type {
@@ -70,6 +72,7 @@ export default function ProductCatalogPage() {
   const [formError, setFormError] = useState('')
   const [statusProduct, setStatusProduct] = useState<ProductSummary | null>(null)
   const [deleteProduct, setDeleteProduct] = useState<ProductSummary | null>(null)
+  const [labelProduct, setLabelProduct] = useState<ProductDetails | null>(null)
   const [categoryDialog, setCategoryDialog] = useState(false)
   const [categoryName, setCategoryName] = useState('')
   const [refreshVersion, setRefreshVersion] = useState(0)
@@ -141,6 +144,14 @@ export default function ProductCatalogPage() {
       setEditingProduct(await catalogApi.get(token, productId))
     } catch (error) {
       setLoadError(error instanceof ApiError ? error.message : 'Não foi possível abrir o produto.')
+    }
+  }
+
+  async function openLabels(productId: string) {
+    try {
+      setLabelProduct(await catalogApi.get(token, productId))
+    } catch (error) {
+      setLoadError(error instanceof ApiError ? error.message : 'Não foi possível preparar as etiquetas.')
     }
   }
 
@@ -263,7 +274,7 @@ export default function ProductCatalogPage() {
                   <td><span className="catalog-dimensions">{dimensions(product)}</span></td>
                   <td><div className="catalog-variants"><strong>{product.variantCount}</strong><span>{product.colors.slice(0, 3).join(', ') || 'Sem cor'}</span></div></td>
                   <td><span className={`user-status ${product.isActive ? 'user-status--active' : 'user-status--inactive'}`}><span />{product.isActive ? 'Ativo' : 'Inativo'}</span></td>
-                  <td><div className="table-actions">{canUpdate && <button type="button" onClick={() => openEdit(product.id)} title="Editar produto"><FiEdit2 /></button>}{canDisable && <button type="button" onClick={() => setStatusProduct(product)} title={product.isActive ? 'Inativar' : 'Reativar'}>{product.isActive ? <FiSlash /> : <FiCheckCircle />}</button>}{canDelete && !product.isActive && <button className="table-action--danger" type="button" onClick={() => setDeleteProduct(product)} title="Excluir produto"><FiTrash2 /></button>}</div></td>
+                  <td><div className="table-actions"><button type="button" onClick={() => openLabels(product.id)} title="Etiquetas e QR Code"><FiPrinter /></button>{canUpdate && <button type="button" onClick={() => openEdit(product.id)} title="Editar produto"><FiEdit2 /></button>}{canDisable && <button type="button" onClick={() => setStatusProduct(product)} title={product.isActive ? 'Inativar' : 'Reativar'}>{product.isActive ? <FiSlash /> : <FiCheckCircle />}</button>}{canDelete && !product.isActive && <button className="table-action--danger" type="button" onClick={() => setDeleteProduct(product)} title="Excluir produto"><FiTrash2 /></button>}</div></td>
                 </tr>
               ))}
             </tbody>
@@ -273,6 +284,7 @@ export default function ProductCatalogPage() {
       </section>
 
       {editingProduct !== undefined && <ProductFormModal key={editingProduct?.id ?? 'new-product'} product={editingProduct} categories={categories} colors={colors} unitsOfMeasure={unitsOfMeasure} isSaving={isSaving} serverError={formError} onClose={() => setEditingProduct(undefined)} onSave={saveProduct} />}
+      {labelProduct && <ProductLabelModal product={labelProduct} onClose={() => setLabelProduct(null)} />}
 
       {categoryDialog && <div className="modal-backdrop" role="presentation"><section className="confirm-dialog category-dialog" role="dialog" aria-modal="true"><span className="confirm-dialog__icon"><FiLayers /></span><h2>Nova categoria</h2><p>Crie uma organização para agrupar os produtos do catálogo.</p><form onSubmit={createCategory}><input value={categoryName} onChange={(event) => setCategoryName(event.target.value)} placeholder="Ex.: Montantes" autoFocus />{formError && <div className="modal-error">{formError}</div>}<div><button className="button button--secondary" type="button" onClick={() => setCategoryDialog(false)}>Cancelar</button><button className="button button--primary" type="submit" disabled={isSaving}>Criar categoria</button></div></form></section></div>}
 

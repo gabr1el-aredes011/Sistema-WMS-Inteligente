@@ -20,7 +20,7 @@ Este arquivo registra melhorias aprovadas para implementação futura. A ordem a
 
 ### Mensagem específica para usuário inativo
 
-- Quando uma conta inativa tentar entrar, exibir: **“Seu usuário está inativo. Comunique seu administrador.”**
+- Quando uma conta inativa tentar entrar, exibir: **“Seu perfil está inativo. Entre em contato com o seu administrador.”**
 - Manter mensagens genéricas para e-mail ou senha incorretos, evitando revelar se contas desconhecidas existem.
 - Cobrir o comportamento com testes na API e no frontend.
 
@@ -46,7 +46,24 @@ Diretriz de modelagem:
 - Medidas devem ser armazenadas em unidade padronizada, preferencialmente milímetros, e não como textos `1m`, `60cm` ou `1,20m`.
 - O XML poderá alimentar um importador idempotente após a definição da unidade de medida, política de atualização e regras das etiquetas operacionais.
 
+## Descoberta operacional da PV Company
+
+### Endereçamento físico adiado
+
+- Não presumir depósitos, zonas, corredores, estruturas ou endereços sem levantamento presencial ou validação formal da empresa.
+- A Fase 4 permanece no roadmap, mas será iniciada somente quando a equipe tiver informações confiáveis sobre a operação física.
+- Enquanto isso, priorizar funcionalidades independentes da planta: catálogo, identificação, etiquetas, fornecedores, lotes, fluxos documentais e preparação de recebimentos.
+- Evitar criar um “estoque genérico” que precise ser descartado quando a implantação real definir os locais e regras operacionais.
+
 ## Ciclo de vida e leitura por scanner
+
+### Etiquetas operacionais de catálogo
+
+- Permitir gerar uma etiqueta por variante com QR Code, código interno, produto, cor, dimensões, unidade e conteúdo do volume.
+- O QR Code usa o código interno imutável como identidade principal; textos editáveis permanecem apenas na apresentação humana.
+- O formato inicial do payload é versionado para permitir evolução compatível com o futuro aplicativo de scanner.
+- Etiquetas de catálogo identificam a variante e o conteúdo declarado, mas ainda não representam lote, número de série ou unidade logística única.
+- A identificação individual de volumes será adicionada junto aos módulos de lotes, recebimento e expedição.
 
 ### Cores corporativas
 
