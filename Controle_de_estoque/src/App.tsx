@@ -4,6 +4,7 @@ import { RequirePermission } from './auth/RequirePermission'
 import AppShell from './components/AppShell'
 import DashboardPage from './pages/DashboardPage'
 import LoginPage from './pages/LoginPage'
+import ProductCatalogPage from './pages/ProductCatalogPage'
 import UsersPage from './pages/UsersPage'
 
 function App() {
@@ -18,6 +19,14 @@ function App() {
         }
       >
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route
+          path="/products"
+          element={
+            <RequirePermission permission="products.read">
+              <ProductCatalogPage />
+            </RequirePermission>
+          }
+        />
         <Route
           path="/users"
           element={

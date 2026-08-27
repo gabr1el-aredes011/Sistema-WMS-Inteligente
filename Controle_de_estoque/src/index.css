@@ -38,6 +38,15 @@ body {
   margin: 0;
 }
 
+.app-loading {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  color: #607187;
+  background: #f4f7fb;
+  font: 600 0.85rem 'Inter', sans-serif;
+}
+
 button,
 input {
   font: inherit;
