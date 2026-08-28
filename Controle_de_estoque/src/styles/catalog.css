@@ -330,17 +330,20 @@
 
 @media print {
   @page { margin: 8mm; }
-  body * { visibility: hidden !important; }
-  .product-label-print,
-  .product-label-print * { visibility: visible !important; }
-  .product-label-print { position: absolute; inset: 0; display: block; padding: 0; background: #fff; }
+  .sidebar,
+  .topbar,
+  .catalog-page > :not(.product-label-print) { display: none !important; }
+  .dashboard-shell,
+  .dashboard-main,
+  .catalog-page { display: block !important; width: 100% !important; min-height: 0 !important; margin: 0 !important; padding: 0 !important; }
+  .product-label-print { position: static; display: block; padding: 0; background: #fff; }
   .label-modal { width: 100%; max-height: none; overflow: visible; box-shadow: none; }
   .label-modal__header,
   .label-modal__controls,
   .label-modal__footer { display: none !important; }
   .label-modal__body { display: block; padding: 0; background: #fff; }
-  .label-sheet { display: grid; max-height: none; overflow: visible; }
-  .product-label { page-break-inside: avoid; }
+  .label-sheet { display: block; max-height: none; overflow: visible; }
+  .product-label { margin-bottom: 8mm; break-inside: avoid; page-break-inside: avoid; }
 }
 
 .category-dialog form > input {
