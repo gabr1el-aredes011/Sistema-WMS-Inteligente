@@ -29,12 +29,12 @@ const navigation = [
     permission: 'products.read',
   },
   { label: 'Recebimentos', icon: FiBox },
-  { label: 'Expedições', icon: FiTruck },
+  { label: 'Expedições', icon: FiTruck, path: '/dispatches', permission: 'dispatch.read' },
   {
-    label: 'Fornecedores',
+    label: 'Transportadoras',
     icon: FiBriefcase,
-    path: '/suppliers',
-    permission: 'suppliers.read',
+    path: '/carriers',
+    permission: 'carriers.read',
   },
   {
     label: 'Usuários',

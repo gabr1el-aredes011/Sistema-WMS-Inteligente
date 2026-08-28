@@ -1,0 +1,30 @@
+.shipping-tabs { display: flex; gap: .45rem; margin-bottom: 1rem; }
+.shipping-tabs button { display: flex; align-items: center; gap: .45rem; padding: .65rem 1rem; border: 1px solid #dfe7ef; border-radius: 9px; color: #6d7f92; background: #fff; font-weight: 700; }
+.shipping-tabs button.active { border-color: #8ed8ff; color: #087fc1; background: #eef9ff; }
+.pickup-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.pickup-card { padding: 1rem; border: 1px solid #e0e7ee; border-radius: 12px; background: #fff; box-shadow: 0 8px 24px rgba(20,45,70,.04); }
+.pickup-card > header { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
+.pickup-card header small { color: #1698d4; font-size: .62rem; font-weight: 800; }
+.pickup-card h2 { margin: .2rem 0; color: #223449; font-size: .95rem; }
+.pickup-status { padding: .3rem .5rem; border-radius: 999px; font-size: .6rem; font-weight: 800; background: #eef2f6; }
+.pickup-status--ReadyForPickup { color: #087d54; background: #e8fff5; }
+.pickup-status--Collected { color: #216ba1; background: #eaf6ff; }
+.pickup-status--Cancelled { color: #b53a49; background: #fff0f2; }
+.pickup-card dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; margin: 1rem 0; }
+.pickup-card dt { color: #8897a7; font-size: .56rem; text-transform: uppercase; }
+.pickup-card dd { margin: .15rem 0 0; color: #3b4d60; font-size: .68rem; font-weight: 700; }
+.pickup-card > p { min-height: 2rem; color: #75869a; font-size: .66rem; }
+.pickup-card > footer { display: flex; gap: .45rem; padding-top: .7rem; border-top: 1px solid #edf1f5; }
+.pickup-card > footer button, .icon-action { display: flex; align-items: center; gap: .35rem; min-height: 34px; padding: 0 .65rem; border: 1px solid #dce5ed; border-radius: 7px; color: #607286; background: #fff; font-size: .62rem; font-weight: 700; }
+.pickup-card > footer .ready { margin-left: auto; border-color: #8ed8ff; color: #087fc1; background: #effaff; }
+.pickup-card > footer .cancel { padding: 0 .55rem; color: #c84755; }
+.shipping-empty { grid-column: 1 / -1; display: grid; place-items: center; min-height: 260px; color: #8191a3; background: #fff; border: 1px dashed #d9e3eb; border-radius: 12px; }
+.shipping-empty svg { font-size: 1.8rem; }.shipping-empty strong { color: #35485c; }.shipping-empty span { font-size: .68rem; }
+.shipping-modal { width: min(100%, 650px); }.shipping-modal textarea { resize: vertical; }
+.carrier-portal { display: grid; min-height: 100vh; place-items: center; padding: 1rem; background: radial-gradient(circle at top,#eaf8ff,#f5f7fa 50%); }
+.carrier-portal > section { width: min(100%, 620px); padding: 2rem; border: 1px solid #dce6ee; border-radius: 18px; background: #fff; box-shadow: 0 24px 70px rgba(22,52,80,.12); }
+.carrier-portal img { width: 78px; margin-bottom: 1.5rem; }.carrier-portal h1 { margin: .35rem 0 .2rem; color: #172b40; }.portal-reference { color: #7b8b9d; }
+.portal-status { display: flex; gap: 1rem; margin: 1.5rem 0; padding: 1rem; border-radius: 12px; color: #725d1a; background: #fff9df; }.portal-status svg { flex: 0 0 auto; font-size: 1.6rem; }.portal-status p { margin: .25rem 0 0; font-size: .75rem; }
+.portal-status--ReadyForPickup { color: #08764f; background: #eafff5; }.portal-status--Collected { color: #17699c; background: #eaf7ff; }.portal-status--Cancelled { color: #af3644; background: #fff0f2; }
+.carrier-portal dl { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }.carrier-portal dt { color: #8291a2; font-size: .6rem; text-transform: uppercase; }.carrier-portal dd { margin: .2rem 0 0; color: #34485c; font-weight: 700; }.carrier-portal footer { margin-top: 1.5rem; color: #91a0af; font-size: .62rem; text-align: center; }.portal-error { color: #d04a59; font-size: 2rem; }
+@media (max-width: 780px) { .pickup-grid { grid-template-columns: 1fr; }.pickup-card dl,.carrier-portal dl { grid-template-columns: 1fr; } }

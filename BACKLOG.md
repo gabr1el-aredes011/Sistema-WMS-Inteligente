@@ -55,6 +55,28 @@ Diretriz de modelagem:
 - Enquanto isso, priorizar funcionalidades independentes da planta: catálogo, identificação, etiquetas, fornecedores, lotes, fluxos documentais e preparação de recebimentos.
 - Evitar criar um “estoque genérico” que precise ser descartado quando a implantação real definir os locais e regras operacionais.
 
+### Fornecedores aguardando validação
+
+- Preservar o módulo e os dados já desenvolvidos para uso futuro em compras, recebimento e NF-e.
+- Manter a aba de fornecedores oculta do menu principal enquanto a necessidade não estiver validada com a PV Company.
+- Não reutilizar fornecedores como transportadoras: são responsabilidades e fluxos diferentes.
+
+## Transportadoras, expedição e prontidão de coleta
+
+- Cadastrar transportadoras separadamente dos fornecedores.
+- Criar solicitações de coleta com código interno, referência da carga, quantidade de volumes, previsão e status.
+- Fluxo inicial: `Em preparação` → `Pronto para coleta` → `Coletado`, com possibilidade de cancelamento antes da coleta.
+- Gerar um link aleatório e restrito por coleta para compartilhamento com a transportadora.
+- O portal externo não expõe estoque, usuários, clientes ou outras coletas.
+- Futuramente adicionar expiração/rotação do link, notificações SignalR, confirmação de motorista/veículo e comprovante de coleta.
+
+## Impressão e equipamentos
+
+- A impressão A4 serve para testes domésticos e validação visual sem impressora térmica.
+- Corrigir a paginação para que múltiplas cópias sejam distribuídas em várias páginas.
+- Em impressora de etiquetas, configurar no driver o tamanho real do papel e imprimir em escala de 100%, sem “ajustar à página”.
+- Antes da implantação, validar tamanho da etiqueta, resolução, contraste, resistência do adesivo e distância de leitura nos equipamentos reais da empresa.
+
 ## Ciclo de vida e leitura por scanner
 
 ### Etiquetas operacionais de catálogo

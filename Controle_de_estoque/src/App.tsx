@@ -6,7 +6,8 @@ import DashboardPage from './pages/DashboardPage'
 import LoginPage from './pages/LoginPage'
 import ProductCatalogPage from './pages/ProductCatalogPage'
 import UsersPage from './pages/UsersPage'
-import SuppliersPage from './pages/SuppliersPage'
+import ShippingPage from './pages/ShippingPage'
+import CarrierPortalPage from './pages/CarrierPortalPage'
 
 function App() {
   return (
@@ -29,13 +30,14 @@ function App() {
           }
         />
         <Route
-          path="/suppliers"
+          path="/dispatches"
           element={
-            <RequirePermission permission="suppliers.read">
-              <SuppliersPage />
+            <RequirePermission permission="dispatch.read">
+              <ShippingPage initialTab="pickups" />
             </RequirePermission>
           }
         />
+        <Route path="/carriers" element={<RequirePermission permission="carriers.read"><ShippingPage initialTab="carriers" /></RequirePermission>} />
         <Route
           path="/users"
           element={
@@ -45,6 +47,7 @@ function App() {
           }
         />
       </Route>
+      <Route path="/coleta/:accessToken" element={<CarrierPortalPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
