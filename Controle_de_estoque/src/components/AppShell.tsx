@@ -28,14 +28,9 @@ const navigation = [
     path: '/products',
     permission: 'products.read',
   },
-  { label: 'Recebimentos', icon: FiBox },
+  { label: 'Pedidos', icon: FiBriefcase, path: '/orders', permission: 'inventory.read' },
+  { label: 'Entrada de produção', icon: FiBox, path: '/production', permission: 'inventory.read' },
   { label: 'Expedições', icon: FiTruck, path: '/dispatches', permission: 'dispatch.read' },
-  {
-    label: 'Transportadoras',
-    icon: FiBriefcase,
-    path: '/carriers',
-    permission: 'carriers.read',
-  },
   {
     label: 'Usuários',
     icon: FiUsers,

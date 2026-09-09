@@ -1,0 +1,246 @@
+.ops-page {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 36px 28px;
+  color: #24364b;
+}
+.ops-heading,
+.ops-row,
+.ops-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.ops-heading h1 {
+  font-size: 28px;
+  margin: 8px 0;
+}
+.ops-eyebrow {
+  color: #0789c7;
+  font-size: 11px;
+  letter-spacing: 1.6px;
+  font-weight: 700;
+}
+.ops-page p {
+  line-height: 1.6;
+  color: #687b90;
+}
+.ops-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 26px 0;
+}
+.ops-metrics article,
+.ops-card {
+  background: white;
+  border: 1px solid #e0eaf3;
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 18px;
+}
+.ops-metrics span {
+  display: block;
+  font-size: 12px;
+  color: #687b90;
+}
+.ops-metrics strong {
+  font-size: 28px;
+  display: block;
+  margin-top: 10px;
+}
+.ops-card h2,
+.ops-modal h2 {
+  font-size: 20px;
+  margin: 0 0 12px;
+}
+.ops-page button {
+  padding: 10px 15px;
+  border: 1px solid #dbe6f0;
+  border-radius: 7px;
+  background: white;
+  color: #31516b;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+}
+.ops-page button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.ops-page .ops-primary {
+  background: #078ac6;
+  color: white;
+  border-color: #078ac6;
+}
+.ops-page .ops-danger {
+  color: #bc364e;
+  margin-top: 18px;
+}
+.ops-page label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  flex: 1;
+  font-size: 13px;
+  min-width: 150px;
+}
+.ops-page input,
+.ops-page select,
+.ops-page textarea {
+  padding: 11px;
+  border: 1px solid #dbe6f0;
+  border-radius: 7px;
+  color: #24364b;
+  background: #fbfdff;
+  font: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+.ops-page input:focus,
+.ops-page select:focus,
+.ops-page textarea:focus {
+  outline: 2px solid #55b9e8;
+  outline-offset: 1px;
+}
+.ops-row {
+  margin: 16px 0;
+  align-items: end;
+}
+.ops-actions {
+  justify-content: flex-start;
+  margin: 16px 0;
+}
+.ops-table-wrap {
+  overflow-x: auto;
+}
+.ops-page table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+.ops-page th {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #7a8ba0;
+  background: #f8fbfe;
+}
+.ops-page th,
+.ops-page td {
+  padding: 15px 12px;
+  border-bottom: 1px solid #edf2f7;
+}
+.ops-page small {
+  display: block;
+  margin-top: 5px;
+  color: #7a8ba0;
+  font-size: 11px;
+}
+.ops-badge {
+  padding: 6px 9px;
+  border-radius: 6px;
+  background: #eaf4fc;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.ops-Ready {
+  background: #e3f7ee;
+  color: #14865e;
+}
+.ops-Cancelled {
+  background: #fff0f2;
+  color: #b43a4f;
+}
+.ops-alert,
+.ops-success {
+  padding: 14px;
+  border-radius: 8px;
+  margin: 16px 0;
+  background: #fff0f2;
+  color: #a52d43;
+}
+.ops-success {
+  background: #e3f7ee;
+  color: #14865e;
+}
+.ops-overlay {
+  position: fixed;
+  inset: 0;
+  background: #10243599;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+}
+.ops-modal {
+  background: white;
+  border-radius: 14px;
+  max-height: 90vh;
+  overflow-y: auto;
+  width: min(980px, 100%);
+  padding: 28px;
+  box-shadow: 0 20px 70px #14293d44;
+}
+.ops-line {
+  border: 1px solid #e0eaf3;
+  border-radius: 9px;
+  padding: 18px;
+  margin: 16px 0;
+}
+.ops-page .ops-check {
+  flex-direction: row;
+  align-items: center;
+  margin: 12px 0;
+}
+.ops-check input {
+  width: auto;
+}
+.ops-key {
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+.ops-history {
+  padding-left: 20px;
+}
+.ops-history li {
+  padding: 8px;
+}
+.ops-history p {
+  margin: 0;
+}
+.ops-page fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.ops-selected {
+  background: #f0f8fe;
+  padding: 14px;
+  border-radius: 8px;
+}
+@media (max-width: 650px) {
+  .ops-page {
+    padding: 20px 12px;
+  }
+  .ops-metrics {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .ops-modal {
+    padding: 18px;
+  }
+  .ops-row {
+    display: block;
+  }
+  .ops-row label {
+    margin: 12px 0;
+  }
+  .ops-overlay {
+    padding: 8px;
+  }
+}

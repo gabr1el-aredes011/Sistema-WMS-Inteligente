@@ -78,7 +78,7 @@ function DashboardPage() {
           <header className="panel__header">
             <div>
               <span className="panel__eyebrow">Evolução contínua</span>
-              <h2>Próximas entregas do WMS</h2>
+              <h2>Sua operação no WMS</h2>
             </div>
             <span className="phase-pill">Fundação operacional</span>
           </header>
@@ -94,22 +94,22 @@ function DashboardPage() {
                 <span className="roadmap-state">Acessar</span>
               </Link>
             )}
-            <div className="roadmap-item">
+            {user.permissions.includes('products.read') && <Link to="/products" className="roadmap-item">
               <span className="roadmap-marker"><FiPackage /></span>
               <div>
                 <strong>Catálogo e estoque</strong>
-                <p>Produtos, endereços e saldos rastreáveis.</p>
+                <p>Produtos, variantes e etiquetas de identificação.</p>
               </div>
               <FiChevronRight aria-hidden="true" />
-            </div>
-            <div className="roadmap-item">
+            </Link>}
+            {user.permissions.includes('inventory.read') && <Link to="/orders" className="roadmap-item">
               <span className="roadmap-marker"><FiTruck /></span>
               <div>
-                <strong>Fluxos logísticos</strong>
-                <p>Recebimento, movimentação e expedição.</p>
+                <strong>Pedidos e reservas</strong>
+                <p>Notas fiscais, pendências de produção e preparação.</p>
               </div>
               <FiChevronRight aria-hidden="true" />
-            </div>
+            </Link>}
           </div>
         </article>
 
