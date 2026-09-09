@@ -6,8 +6,7 @@ import DashboardPage from './pages/DashboardPage'
 import LoginPage from './pages/LoginPage'
 import ProductCatalogPage from './pages/ProductCatalogPage'
 import UsersPage from './pages/UsersPage'
-import ShippingPage from './pages/ShippingPage'
-import CarrierPortalPage from './pages/CarrierPortalPage'
+import OperationsPage from './pages/OperationsPage'
 
 function App() {
   return (
@@ -33,11 +32,12 @@ function App() {
           path="/dispatches"
           element={
             <RequirePermission permission="dispatch.read">
-              <ShippingPage initialTab="pickups" />
+              <OperationsPage mode="dispatch" />
             </RequirePermission>
           }
         />
-        <Route path="/carriers" element={<RequirePermission permission="carriers.read"><ShippingPage initialTab="carriers" /></RequirePermission>} />
+        <Route path="/orders" element={<RequirePermission permission="inventory.read"><OperationsPage mode="orders" /></RequirePermission>} />
+        <Route path="/production" element={<RequirePermission permission="inventory.read"><OperationsPage mode="production" /></RequirePermission>} />
         <Route
           path="/users"
           element={
@@ -47,7 +47,6 @@ function App() {
           }
         />
       </Route>
-      <Route path="/coleta/:accessToken" element={<CarrierPortalPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
