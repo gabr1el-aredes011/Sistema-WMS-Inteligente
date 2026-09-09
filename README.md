@@ -1,5 +1,7 @@
 # WMS Inteligente
 
+> Entrega atual: [Pedidos, entrada de produção e expedição](MACROBLOCO_PEDIDOS_PRODUCAO.md). Esse documento distingue funcionalidades implementadas e limites atuais do roadmap amplo abaixo. Fornecedores e transportadoras foram descontinuados do produto por decisão da equipe.
+
 > Para preparar e executar o projeto, consulte o [Guia completo de ambiente local](GUIA_DE_AMBIENTE_LOCAL.md).
 
 README OFICIAL DO REPOSITÓRIO

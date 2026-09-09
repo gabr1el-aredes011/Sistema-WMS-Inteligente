@@ -1,5 +1,11 @@
 # Backlog do WMS Inteligente
 
+## Decisões vigentes — setembro de 2026
+
+O [macrobloco de pedidos e produção](MACROBLOCO_PEDIDOS_PRODUCAO.md) substitui a prioridade antiga de transportadoras/coletas. Fornecedores, transportadoras e portal externo foram descontinuados por decisão do usuário; registros históricos são preservados. Os tópicos antigos abaixo documentam a evolução anterior, não autorização para reativar esses módulos.
+
+Implementado nesta feature: pedidos com PDF/XML, personalizados, reservas FIFO, saldo consolidado por variante, entrada de produção com leitura do QR, faltas urgentes, cancelamento e expedição completa com conferência. Continuam futuros: localização física, SignalR, lotes, integração automática com Bling e exclusão de usuários. A sessão existente permanece aprovada.
+
 Este arquivo registra melhorias aprovadas para implementação futura. A ordem abaixo não representa necessariamente prioridade de entrega.
 
 ## Identidade e acesso
